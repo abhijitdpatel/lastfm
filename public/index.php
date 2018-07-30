@@ -1,22 +1,19 @@
 <?php
 
 /**
- * Front controller
+ * Front controller.
  *
  * PHP version 7.0
  */
 
 /**
- * Composer
+ * Composer.
  */
- 
 define('BASE_PATH', dirname(__DIR__));
 
+require BASE_PATH.'/vendor/autoload.php';
 
-require BASE_PATH . '/vendor/autoload.php';
-
-
-/**
+/*
  * Error and Exception handling
  */
 error_reporting(E_ALL);
@@ -24,7 +21,7 @@ set_error_handler('Abhijit\Library\Log\Error::errorHandler');
 set_exception_handler('Abhijit\Library\Log\Error::exceptionHandler');
 
 /**
- * Routing
+ * Routing.
  */
 $router = new Abhijit\Library\Route\Router();
 
@@ -33,5 +30,5 @@ $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('list', ['controller' => 'Home', 'action' => 'list']);
 $router->add('viewartist', ['controller' => 'Artist', 'action' => 'index']);
 $router->add('{controller}/{action}');
-   
+
 $router->dispatch($_SERVER['SCRIPT_NAME']);

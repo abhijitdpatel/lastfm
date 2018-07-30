@@ -3,26 +3,26 @@
 namespace Abhijit\Library\Route;
 
 /**
- * Router
- *
+ * Router.
  */
 class Router
 {
-
     /**
-     * Associative array of routes (the routing table)
+     * Associative array of routes (the routing table).
+     *
      * @var array
      */
     protected $routes = [];
 
     /**
-     * Parameters from the matched route
+     * Parameters from the matched route.
+     *
      * @var array
      */
     protected $params = [];
 
     /**
-     * Add a route to the routing table
+     * Add a route to the routing table.
      *
      * @param string $route  The route URL
      * @param array  $params Parameters (controller, action, etc.)
@@ -41,13 +41,13 @@ class Router
         $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
 
         // Add start and end delimiters, and case insensitive flag
-        $route = '/^' . $route . '$/i';
+        $route = '/^'.$route.'$/i';
 
         $this->routes[$route] = $params;
     }
 
     /**
-     * Get all the routes from the routing table
+     * Get all the routes from the routing table.
      *
      * @return array
      */
@@ -62,7 +62,7 @@ class Router
      *
      * @param string $url The route URL
      *
-     * @return boolean  true if a match found, false otherwise
+     * @return bool true if a match found, false otherwise
      */
     public function match($url)
     {
@@ -76,6 +76,7 @@ class Router
                 }
 
                 $this->params = $params;
+
                 return true;
             }
         }
@@ -84,7 +85,7 @@ class Router
     }
 
     /**
-     * Get the currently matched parameters
+     * Get the currently matched parameters.
      *
      * @return array
      */
@@ -95,7 +96,7 @@ class Router
 
     /**
      * Dispatch the route, creating the controller object and running the
-     * action method
+     * action method.
      *
      * @param string $url The route URL
      *
@@ -103,26 +104,24 @@ class Router
      */
     public function dispatch($url)
     {
-        $url = str_replace('/','',$url);
+        $url = str_replace('/', '', $url);
         $url = $this->removeQueryStringVariables($url);
 
         if ($this->match($url)) {
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
-            $controller = $this->getNamespace() . $controller;
+            $controller = $this->getNamespace().$controller;
 
             if (class_exists($controller)) {
                 $controller_object = new $controller($this->params);
 
                 $action = $this->params['action'];
                 $action = $this->convertToCamelCase($action);
-                
-                if (preg_match('/action$/i', $action) == 0) { 
-                    
-                    $action  .= "Action";
+
+                if (preg_match('/action$/i', $action) == 0) {
+                    $action .= 'Action';
                     $view = $controller_object->$action();
                     echo $view;
-                 
                 } else {
                     throw new \Exception("Method $action in controller $controller cannot be called directly - remove the Action suffix to call this method");
                 }
@@ -136,7 +135,7 @@ class Router
 
     /**
      * Convert the string with hyphens to StudlyCaps,
-     * e.g. post-authors => PostAuthors
+     * e.g. post-authors => PostAuthors.
      *
      * @param string $string The string to convert
      *
@@ -149,7 +148,7 @@ class Router
 
     /**
      * Convert the string with hyphens to camelCase,
-     * e.g. add-new => addNew
+     * e.g. add-new => addNew.
      *
      * @param string $string The string to convert
      *
@@ -191,7 +190,7 @@ class Router
         $namespace = 'Abhijit\App\Controllers\\';
 
         if (array_key_exists('namespace', $this->params)) {
-            $namespace .= $this->params['namespace'] . '\\';
+            $namespace .= $this->params['namespace'].'\\';
         }
 
         return $namespace;
