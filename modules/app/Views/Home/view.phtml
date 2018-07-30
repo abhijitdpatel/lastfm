@@ -1,5 +1,10 @@
 <div class="page-wrapper">
   <h1>Artist List</h1>
+  <form name="<?php echo $home_url . 'list';?>" method="post">
+  	<input type="text" name="country" value="<?php echo isset($country)?$country:'';?>" />
+  	<input type="submit" value="Filter" />
+  </form>
+  
   <?php 
   if (isset($artists) && count($artists) > 0):?>
   <div class="artist-list-wrapper display-block">
@@ -35,6 +40,7 @@
 				  $total = $attributes['totalPages'];
 				  $j = 0;
 				  $k = -2;
+				  $urlSuffix = isset($country)?'&country='.$country:''
 			?>
             <ul class="page-link">
             <?php while($j<5)
@@ -46,7 +52,7 @@
                     <?php if($i+$k == $i):?>
                     <li class="page-item disabled"><span class="page-link"><?php echo $i+$k;?></span></li>
                     <?php else:?>
-                    <li class="page-item"><a class="page-link" href="<?php echo $home_url . 'list?p=' . ($i+$k); ?>"><?php echo $i+$k;?></a></li>
+                    <li class="page-item"><a class="page-link" href="<?php echo $home_url . 'list?p=' . ($i+$k).$urlSuffix; ?>"><?php echo $i+$k;?></a></li>
                     <?php endif;?>
                     <?php 
 					$j++;
@@ -64,6 +70,6 @@
 	<?php endif; ?>
   </div>
   <?php else:?>
-	<?php  echo $artists;?>
+	<?php  echo 'Eighter list is empty or proper country not selected';?>
   <?php endif;?>
 </div>
