@@ -34,9 +34,5 @@ class Artist extends Model
 		{
 			$this->country = $country;
 		}
-		elseif(isset($_SESSION['country']) && $_SESSION['country']!='')
-		{
-			$this->country = $_SESSION['country'];
-		}
 	}
 }
