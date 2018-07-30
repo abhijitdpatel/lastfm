@@ -5,7 +5,7 @@ namespace Abhijit\App\Controllers;
 use Abhijit\Library\Controller\BaseController;
 use Abhijit\Library\View\View;
 use Abhijit\App\Service\GeoTopArtist;
-use Abhijit\App\Config;
+use Abhijit\App\Models\Artist;
 
 
 /**
@@ -27,13 +27,16 @@ class Home extends BaseController
     public function listAction()
     {
 		$page = (isset($_REQUEST['p']) && $_REQUEST['p']>0)?$_REQUEST['p']:1;	
-		$country = (isset($_REQUEST['country']) && $_REQUEST['country']!='')?$_REQUEST['country']:Config::DEFAULT_COUNTRY;	
-		if(isset($country) && $country!='')
+		$country = (isset($_REQUEST['country']) && $_REQUEST['country']!='')?$_REQUEST['country']:'';	
+		$artistModel = new Artist();
+		$artistModel->setCountry($country);
+		$dataCountry = $artistModel->getCountry();
+		if(isset($dataCountry) && $dataCountry!='')
 		{
         	$apiService = new GeoTopArtist();
-			$topGeoArtist = $apiService->getGeoTopArtist($page,$country);
+			$topGeoArtist = $apiService->getGeoTopArtist($page,$dataCountry);
 			$this->controllerData['artists'] = $topGeoArtist;
-			$this->controllerData['country'] = $country;
+			$this->controllerData['country'] = $dataCountry;
 		}
 		else
 		{

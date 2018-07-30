@@ -26,7 +26,6 @@ class Api
      */
     protected function callApi($params = array())
     {
-		
 		if(!(isset($this->apiKey) && $this->apiKey) || !(isset($this->apiSignature) && $this->apiSignature) )
 			return "Invalid API Key and Signature.";
 		if(isset($this->apiMethod)&& $this->apiMethod!='')
