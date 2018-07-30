@@ -4,21 +4,18 @@ namespace Abhijit\Library\Log;
 
 use Abhijit\Library\View\View;
 
-
 /**
- * Error and exception handler
- *
+ * Error and exception handler.
  */
 class Error
 {
-
     /**
      * Error handler. Convert all errors to Exceptions by throwing an ErrorException.
      *
-     * @param int $level  Error level
-     * @param string $message  Error message
-     * @param string $file  Filename the error was raised in
-     * @param int $line  Line number in the file
+     * @param int    $level   Error level
+     * @param string $message Error message
+     * @param string $file    Filename the error was raised in
+     * @param int    $line    Line number in the file
      *
      * @return void
      */
@@ -32,7 +29,7 @@ class Error
     /**
      * Exception handler.
      *
-     * @param Exception $exception  The exception
+     * @param Exception $exception The exception
      *
      * @return void
      */
@@ -46,23 +43,23 @@ class Error
         http_response_code($code);
 
         if (\Abhijit\App\Config::SHOW_ERRORS) {
-            echo "<h1>Fatal error</h1>";
-            echo "<p>Uncaught exception: '" . get_class($exception) . "'</p>";
-            echo "<p>Message: '" . $exception->getMessage() . "'</p>";
-            echo "<p>Stack trace:<pre>" . $exception->getTraceAsString() . "</pre></p>";
-            echo "<p>Thrown in '" . $exception->getFile() . "' on line " . $exception->getLine() . "</p>";
+            echo '<h1>Fatal error</h1>';
+            echo "<p>Uncaught exception: '".get_class($exception)."'</p>";
+            echo "<p>Message: '".$exception->getMessage()."'</p>";
+            echo '<p>Stack trace:<pre>'.$exception->getTraceAsString().'</pre></p>';
+            echo "<p>Thrown in '".$exception->getFile()."' on line ".$exception->getLine().'</p>';
         } else {
-            $log = dirname(__DIR__) . '/logs/' . date('Y-m-d') . '.txt';
+            $log = dirname(__DIR__).'/logs/'.date('Y-m-d').'.txt';
             ini_set('error_log', $log);
 
-            $message = "Uncaught exception: '" . get_class($exception) . "'";
-            $message .= " with message '" . $exception->getMessage() . "'";
-            $message .= "\nStack trace: " . $exception->getTraceAsString();
-            $message .= "\nThrown in '" . $exception->getFile() . "' on line " . $exception->getLine();
+            $message = "Uncaught exception: '".get_class($exception)."'";
+            $message .= " with message '".$exception->getMessage()."'";
+            $message .= "\nStack trace: ".$exception->getTraceAsString();
+            $message .= "\nThrown in '".$exception->getFile()."' on line ".$exception->getLine();
 
             error_log($message);
 
-            $errorTemplate = $code . ".phtml";
+            $errorTemplate = $code.'.phtml';
             $view = new View($errorTemplate);
             echo $view;
         }
