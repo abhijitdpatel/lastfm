@@ -1,2 +1,11 @@
-<h1>Hello World From View Artist File  </h1>
-<?php echo $home_url;?>
+<div class="page-wrapper">
+  <div class="artist-info-image"><img src="<?php echo $artist['artist']['image'][3]['#text'];?>" /></div>
+  <div class="artist-info-contents col-xs-12">
+	<div class="artist-info-name col-xs-12"><h1><?php echo $artist['artist']['name'];?></h1></div>
+	<div class="artist-info-public col-xs-12">Published: <?php echo $artist['artist']['bio']['published'];?></div>	
+	<h5 class="sub-head">Summary</h5>
+    <div class="artist-info-summary col-xs-12"><?php echo $artist['artist']['bio']['summary'];?></div>
+    <h5 class="sub-head">Content</h5>
+   	<div class="artist-content col-xs-12"><?php echo $artist['artist']['bio']['content'];?></div>
+  </div>
+</div>

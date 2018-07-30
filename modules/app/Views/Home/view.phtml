@@ -1,0 +1,69 @@
+<div class="page-wrapper">
+  <h1>Artist List</h1>
+  <?php 
+  if (isset($artists) && count($artists) > 0):?>
+  <div class="artist-list-wrapper display-block">
+
+    <?php 
+	if(isset($artists['topartists']) && count($artists['topartists'])>=2):
+	  
+	  if(isset($artists['topartists']['@attr']) && count($artists['topartists']['@attr'])>0):
+        $attributes = $artists['topartists']['@attr'];
+      endif;
+	  if(isset($artists['topartists']['artist']) && count($artists['topartists']['artist'])>0):
+        $artists = $artists['topartists']['artist'];
+      endif;
+	  if(is_array($attributes) && count($attributes)>0):
+	    foreach ($artists as $artist) 
+	    { 
+	?>
+        <div class="artist-wrapper display-blockr">
+        	<div class="artist-image artist-data display-block">
+				<img src="<?php echo $artist['image'][1]['#text']; ?>" />
+			</div>
+        	<div class="artist-name artist-data display-block">
+				<a href="<?php echo $home_url . 'viewartist?mbid=' . $artist['mbid']; ?>">
+					<?php echo $artist['name']; ?>
+				</a>
+			</div>
+        	<?php //var_dump($artist); ?>
+        </div>
+        <?php }?>
+        <div class="pagination">
+          <?php if(isset($attributes['page']) && isset($attributes['totalPages'])):?>
+          	<?php $i = $attributes['page'];
+				  $total = $attributes['totalPages'];
+				  $j = 0;
+				  $k = -2;
+			?>
+            <ul class="page-link">
+            <?php while($j<5)
+			{?>
+                <?php 
+				if($i+$k>0)
+				{
+					?>
+                    <?php if($i+$k == $i):?>
+                    <li class="page-item disabled"><span class="page-link"><?php echo $i+$k;?></span></li>
+                    <?php else:?>
+                    <li class="page-item"><a class="page-link" href="<?php echo $home_url . 'list?p=' . ($i+$k); ?>"><?php echo $i+$k;?></a></li>
+                    <?php endif;?>
+                    <?php 
+					$j++;
+				}
+				$k++;	
+				?>
+			<?php
+			}
+			?>
+            </ul>
+			
+          <?php endif;?>
+        </div>
+	  <?php endif; ?>
+	<?php endif; ?>
+  </div>
+  <?php else:?>
+	<?php  echo $artists;?>
+  <?php endif;?>
+</div>

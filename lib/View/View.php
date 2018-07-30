@@ -44,13 +44,14 @@ class View
         extract($data, EXTR_SKIP);
 
         $file = BASE_PATH . "/modules/app/Views/$view";  // relative to Core directory
-
+		require BASE_PATH . "/modules/app/Views/header.phtml";
         if (is_readable($file)) {
             require $file;
            
         } else {
             throw new \Exception("$file not found or it does not have required permission!");
         }
+		require BASE_PATH . "/modules/app/Views/footer.phtml";
     }
 
     /**

@@ -64,6 +64,12 @@ class Config
     const DEFAULT_COUNTRY = 'Australia';
 	
 	/**
+     * Default Page Limit
+     * @var Number
+     */
+    const DEFAULT_LIMIT = 5;
+	
+	/**
      * Root URL
      * @var String
      */

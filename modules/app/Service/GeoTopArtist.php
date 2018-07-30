@@ -13,7 +13,7 @@ class GeoTopArtist extends Api
 	public function __construct()
     {
         $this->apiMethod = 'geo.gettopartists';
-        $this->limit     = '5';  
+        $this->limit     = Config::DEFAULT_LIMIT;  
 		parent::__construct($this->apiMethod,$this->limit);
     }
     /**
@@ -21,9 +21,9 @@ class GeoTopArtist extends Api
      *
      * @return array
      */
-    public function getGeoTopArtist($country = Config::DEFAULT_COUNTRY)
+    public function getGeoTopArtist($page=1,$country = Config::DEFAULT_COUNTRY)
     {
-		$params = array('country'=>$country,'limit'=>$this->limit);
+		$params = array('country'=>strtoupper($country),'limit'=>$this->limit,'page'=>$page);
         $result = $this->callApi($params);
 		/**
 		 *Decode Json in Array and return to Controller

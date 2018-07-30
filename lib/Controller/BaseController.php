@@ -14,6 +14,8 @@ abstract class BaseController
      * @var array
      */
     protected $routeParams = [];
+	const HOME_URL = 'http://localhost:8000/';
+	protected $controllerData;
 
     /**
      * Class constructor
@@ -24,6 +26,7 @@ abstract class BaseController
      */
     public function __construct($routeParams)
     {
+		$this->controllerData = $this->getRouterData();
         $this->routeParams = $routeParams;
     }
 
@@ -36,5 +39,12 @@ abstract class BaseController
     {
         return $this->routeParams;
     }
+	
+	public function getRouterData()
+	{
+		return ['home_url' => self::HOME_URL,'page_title'=>'Artists'];
+	}
+	
+	
 
 }

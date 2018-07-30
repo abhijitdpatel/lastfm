@@ -30,6 +30,8 @@ $router = new Abhijit\Library\Route\Router();
 
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
+$router->add('list', ['controller' => 'Home', 'action' => 'list']);
+$router->add('viewartist', ['controller' => 'Artist', 'action' => 'index']);
 $router->add('{controller}/{action}');
    
 $router->dispatch($_SERVER['SCRIPT_NAME']);
